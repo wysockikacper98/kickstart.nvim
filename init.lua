@@ -91,7 +91,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
@@ -195,9 +195,8 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
--- TODO: fix tab switching mapping
--- vim.api.nvim_set_keymap('n', '<A-h>', ':tabp<CR>', { desc = 'Move to previous tab' })
--- vim.api.nvim_set_keymap('n', '<A-l>', ':tabnext<CR>', { desc = 'Move to next tab' })
+vim.api.nvim_set_keymap('n', '<A-h>', 'gT', { desc = 'Move to previous tab' })
+vim.api.nvim_set_keymap('n', '<A-l>', 'gt', { desc = 'Move to next tab' })
 
 vim.keymap.set('n', '<F2>', '<C-W><S-+>', { desc = 'Increase window size', noremap = true })
 vim.keymap.set('n', '<F3>', '<C-W> -', { desc = 'Decrease window size', noremap = true })
@@ -212,7 +211,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
   callback = function()
-    vim.highlight.on_yank()
+    vim.hl.on_yank()
   end,
 })
 
@@ -298,7 +297,7 @@ require('lazy').setup({
     opts = {
       -- delay between pressing a key and opening which-key (milliseconds)
       -- this setting is independent of vim.opt.timeoutlen
-      delay = 0,
+      delay = 200,
       icons = {
         -- set icon mappings to true if you have a Nerd Font
         mappings = vim.g.have_nerd_font,
@@ -772,7 +771,7 @@ require('lazy').setup({
         lua = { 'stylua' },
         -- You can use 'stop_after_first' to run the first available formatter from the list
         -- Conform can also run multiple formatters sequentially
-        javascript = { 'prettierd', 'prettier', stop_after_first = true },
+        javascript = { 'prettier', 'prettierd', stop_after_first = true },
         python = { 'black', 'isort', stop_after_first = true },
         --
       },
@@ -916,6 +915,7 @@ require('lazy').setup({
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
       vim.cmd.colorscheme 'tokyonight-night'
+      -- vim.cmd.colorscheme 'unokai'
     end,
   },
 
@@ -994,12 +994,12 @@ require('lazy').setup({
   --  Here are some example plugins that I've included in the Kickstart repository.
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
-  -- require 'kickstart.plugins.debug',
-  -- require 'kickstart.plugins.indent_line',
-  -- require 'kickstart.plugins.lint',
-  -- require 'kickstart.plugins.autopairs',
-  -- require 'kickstart.plugins.neo-tree',
-  -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
+  require 'kickstart.plugins.debug',
+  require 'kickstart.plugins.indent_line',
+  require 'kickstart.plugins.lint',
+  require 'kickstart.plugins.autopairs',
+  require 'kickstart.plugins.neo-tree',
+  require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
